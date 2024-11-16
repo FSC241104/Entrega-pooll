@@ -1,0 +1,128 @@
+/* Estilos generales */
+body {
+    font-family: 'Poppins', sans-serif; /* Tipografía más moderna */
+    background-color: #f8f9fa;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Suavidad al cambiar entre modos */
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #007bff !important; /* Color principal para destacar */
+}
+
+.nav-link {
+    font-size: 1rem;
+    color: #495057 !important;
+    transition: color 0.3s ease, transform 0.2s ease; /* Animación al pasar el cursor */
+}
+
+.nav-link:hover {
+    color: #007bff !important;
+    transform: scale(1.1); /* Ligero zoom */
+}
+
+/* Layout para empleados */
+.navbar-dark .nav-link {
+    color: #adb5bd !important;
+}
+
+.navbar-dark .nav-link:hover {
+    color: #ffffff !important;
+}
+
+/* Botón Modo Oscuro */
+#themeToggle {
+    border: 1px solid #ffffff;
+    background-color: transparent;
+    color: #ffffff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#themeToggle:hover {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+/* Contenido principal */
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.container {
+    padding-top: 20px;
+}
+
+/* Tarjetas para el catálogo */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Movimiento hacia arriba */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+}
+
+.card-img-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transition: transform 0.5s ease; /* Animación para hover */
+}
+
+.card-img-top:hover {
+    transform: scale(1.1); /* Zoom suave en la imagen */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.card-text {
+    color: #777;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    background-color: #343a40;
+    color: #adb5bd;
+    text-align: center;
+}
+
+/* Animaciones usando AOS (opcional) */
+[data-aos] {
+    opacity: 0;
+    transition-property: transform, opacity;
+}
+
+[data-aos].aos-animate {
+    opacity: 1;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+}

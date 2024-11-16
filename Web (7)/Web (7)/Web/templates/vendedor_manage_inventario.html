@@ -1,0 +1,41 @@
+{% extends "layout_vendedor.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center text-warning display-3 fw-bold mb-4">Gestión de Inventario</h1>
+
+    <!-- Formulario para Buscar Inventario -->
+    <form method="post" class="p-4 mb-5 bg-gradient border rounded shadow-lg" style="background: linear-gradient(145deg, #f8f9fa, #e9ecef);">
+        <h4 class="mb-3 text-info fw-bold">Buscar Inventario</h4>
+        <div class="input-group">
+            <input type="text" class="form-control form-control-lg" name="criterio" placeholder="Buscar por modelo de reloj o ID de compra" required>
+            <button type="submit" name="buscar" class="btn btn-primary btn-lg px-4"><i class="bi bi-search"></i> Buscar</button>
+        </div>
+    </form>
+
+    <!-- Tabla de Inventario -->
+    <h4 class="mb-3 text-success fw-bold">Lista de Inventario</h4>
+    <div class="table-responsive bg-white p-4 border rounded shadow-lg">
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th class="text-dark">ID Inventario</th>
+                    <th class="text-dark">Modelo de Reloj</th>
+                    <th class="text-dark">ID Compra</th>
+                    <th class="text-dark">Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inventario in inventarios %}
+                <tr class="text-center">
+                    <td class="fw-bold text-dark">{{ inventario.id_inventario }}</td>
+                    <td class="text-primary">{{ inventario.reloj_modelo }}</td>
+                    <td class="text-secondary">{{ inventario.id_compra }}</td>
+                    <td class="text-success fw-bold">{{ inventario.cantidad }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

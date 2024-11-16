@@ -1,0 +1,62 @@
+{% extends "layout_employee.html" %}
+
+{% block content %}
+<div class="container my-5 p-5 bg-light rounded shadow-lg" style="background: linear-gradient(135deg, #f3e7e9, #e3eeff);">
+    <h1 class="text-center text-primary fw-bold mb-4">Panel de Administración de Empleado</h1>
+    <p class="lead text-center mb-5">Selecciona una entidad para administrar los datos:</p>
+
+    <div class="row text-center">
+        <div class="col-md-4 my-3">
+            <a href="{{ url_for('manage_proveedores') }}" class="btn btn-outline-primary btn-lg w-100 shadow-sm">
+                <i class="bi bi-people-fill"></i> Gestionar Proveedores
+            </a>
+        </div>
+        <div class="col-md-4 my-3">
+            <a href="{{ url_for('manage_marcas') }}" class="btn btn-outline-success btn-lg w-100 shadow-sm">
+                <i class="bi bi-tag-fill"></i> Gestionar Marcas
+            </a>
+        </div>
+        <div class="col-md-4 my-3">
+            <a href="{{ url_for('manage_relojes') }}" class="btn btn-outline-info btn-lg w-100 shadow-sm">
+                <i class="bi bi-watch"></i> Gestionar Relojes
+            </a>
+        </div>
+        <div class="col-md-4 my-3">
+            <a href="{{ url_for('manage_inventario') }}" class="btn btn-outline-warning btn-lg w-100 shadow-sm">
+                <i class="bi bi-box-seam"></i> Gestionar Inventario
+            </a>
+        </div>
+        <div class="col-md-4 my-3">
+            <a href="{{ url_for('manage_clientes') }}" class="btn btn-outline-danger btn-lg w-100 shadow-sm">
+                <i class="bi bi-person-fill"></i> Gestionar Clientes
+            </a>
+        </div>
+        <div class="col-md-4 my-3">
+            <a href="{{ url_for('manage_ventas') }}" class="btn btn-outline-dark btn-lg w-100 shadow-sm">
+                <i class="bi bi-cart-fill"></i> Gestionar Ventas
+            </a>
+        </div>
+        <!-- Botones adicionales -->
+        <div class="col-md-4 my-3">
+            <a href="{{ url_for('manage_compras') }}" class="btn btn-outline-secondary btn-lg w-100 shadow-sm">
+                <i class="bi bi-bag-fill"></i> Gestionar Compras
+            </a>
+        </div>
+        <div class="col-md-4 my-3">
+            <a href="{{ url_for('manage_empleados') }}" class="btn btn-outline-primary btn-lg w-100 shadow-sm">
+                <i class="bi bi-person-badge-fill"></i> Gestionar Empleados
+            </a>
+        </div>
+        <div class="col-md-4 my-3">
+            <a href="{{ url_for('manage_loginempleado') }}" class="btn btn-outline-success btn-lg w-100 shadow-sm">
+                <i class="bi bi-key-fill"></i> Gestionar LoginEmpleado
+            </a>
+        </div>
+        <div class="col-md-4 my-3">
+            <a href="{{ url_for('manage_detalle_ventas') }}" class="btn btn-outline-danger btn-lg w-100 shadow-sm">
+                <i class="bi bi-list-check"></i> Gestionar Detalle Ventas
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

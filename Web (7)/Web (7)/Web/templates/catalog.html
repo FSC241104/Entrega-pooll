@@ -1,0 +1,40 @@
+{% extends "layout_client.html" %}
+
+{% block content %}
+<main class="container mt-5">
+    <header class="text-center mb-5">
+        <h1 class="display-4 text-primary fw-bold">Catálogo de Productos</h1>
+        <p class="lead text-secondary">Explora nuestra colección exclusiva de relojes.</p>
+    </header>
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg border-0" style="border-radius: 15px;">
+                <!-- Asignación de la imagen -->
+                <img src="{% if producto.nombre_reloj.lower() == 'reloj clásico' %}
+                            {{ url_for('static', filename='img/Reloj.jpg') }}
+                         {% elif producto.nombre_reloj.lower() == 'reloj moderno' %}
+                            {{ url_for('static', filename='img/t5.jpg') }}
+                         {% else %}
+                            https://via.placeholder.com/300x200
+                         {% endif %}"
+                     class="card-img-top" 
+                     alt="Imagen del {{ producto.nombre_reloj }}" 
+                     style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ producto.nombre_reloj }}</h5>
+                    <p class="card-text text-muted"><strong>Marca:</strong> {{ producto.marca }}</p>
+                    <p class="card-text"><strong>Descripción:</strong> {{ producto.descripcion | truncate(50) }}</p>
+                    <p class="card-text text-success"><strong>Precio:</strong> ${{ producto.precio_inventario }}</p>
+                    <p class="card-text text-warning"><strong>Cantidad Disponible:</strong> {{ producto.cantidad_disponible }}</p>
+                    <div class="d-grid gap-2 mt-3">
+                        <button class="btn btn-outline-primary btn-sm"><i class="bi bi-eye"></i> Ver Detalles</button>
+                        <button class="btn btn-success btn-sm"><i class="bi bi-cart-plus"></i> Añadir al Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

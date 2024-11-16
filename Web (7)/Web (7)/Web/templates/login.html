@@ -1,0 +1,150 @@
+{% extends "layout_client.html" %}
+
+{% block content %}
+<div class="container my-5 p-5" style="background: linear-gradient(135deg, #d4fc79, #96e6a1); border-radius: 15px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);">
+    <h1 class="text-center text-dark fw-bold display-4 mb-4">Iniciar Sesión</h1>
+    <div class="d-flex justify-content-end mb-3">
+        <button id="themeToggle" class="btn btn-outline-secondary">Cambiar a Modo Oscuro</button>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {% if error %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form method="post" id="loginForm" class="p-4 bg-white rounded shadow-sm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Usuario</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                            <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                        </button>
+                    </div>
+                    <div class="progress mt-2">
+                        <div id="passwordStrength" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe" name="remember_me">
+                    <label class="form-check-label" for="rememberMe">Recuérdame</label>
+                </div>
+                <div class="g-recaptcha my-3" data-sitekey="TU_CLAVE_SITE_KEY"></div>
+                <button type="submit" id="loginButton" class="btn btn-gradient w-100 btn-lg" style="background: linear-gradient(135deg, #43a047, #66bb6a); color: white; border: none;">
+                    <span id="loginText">Ingresar</span>
+                    <span id="loginSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                </button>
+            </form>
+            <div class="text-center mt-4">
+                <p>O inicia sesión con:</p>
+                <button class="btn btn-outline-primary me-2"><i class="bi bi-facebook"></i> Facebook</button>
+                <button class="btn btn-outline-danger"><i class="bi bi-google"></i> Google</button>
+            </div>
+            <div class="text-center mt-3">
+                <a href="{{ url_for('forgot_password') }}" class="text-decoration-none text-danger">¿Olvidaste tu contraseña?</a> | 
+                <a href="{{ url_for('register_user') }}" class="text-decoration-none text-primary">Registrar aquí</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botón de Ayuda Flotante -->
+<button type="button" class="btn btn-info position-fixed bottom-0 end-0 m-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingresa tu usuario y contraseña para acceder.">
+    <i class="bi bi-question-circle"></i>
+</button>
+
+<script>
+    // Alternar visibilidad de la contraseña
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const icon = document.getElementById('toggleIcon');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    });
+
+    // Medidor de seguridad de la contraseña
+    const passwordField = document.getElementById('password');
+    const strengthBar = document.getElementById('passwordStrength');
+    passwordField.addEventListener('input', () => {
+        const value = passwordField.value;
+        let strength = 0;
+        if (value.length > 6) strength += 25;
+        if (/[A-Z]/.test(value)) strength += 25;
+        if (/[0-9]/.test(value)) strength += 25;
+        if (/[\W]/.test(value)) strength += 25;
+        strengthBar.style.width = strength + '%';
+        strengthBar.classList.remove('bg-danger', 'bg-warning', 'bg-success');
+        if (strength < 50) strengthBar.classList.add('bg-danger');
+        else if (strength < 75) strengthBar.classList.add('bg-warning');
+        else strengthBar.classList.add('bg-success');
+    });
+
+    // Tema claro/oscuro
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        themeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Cambiar a Modo Claro' : 'Cambiar a Modo Oscuro';
+    });
+
+    // Indicador de carga al hacer clic en "Ingresar"
+    const loginButton = document.getElementById('loginButton');
+    loginButton.addEventListener('click', () => {
+        document.getElementById('loginText').classList.add('d-none');
+        document.getElementById('loginSpinner').classList.remove('d-none');
+    });
+
+    // Tooltip en el botón de ayuda
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>
+
+<style>
+    .dark-mode {
+        background-color: #121212;
+        color: #ffffff;
+    }
+    .transition {
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .shake {
+        animation: shake 0.3s ease-in-out;
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+</style>
+{% endblock %}

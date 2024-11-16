@@ -1,0 +1,29 @@
+{% extends "layout_client.html" %}
+{% block content %}
+<div class="text-center my-5 p-5 bg-light rounded shadow-lg" style="background: linear-gradient(135deg, #f3e7e9, #e3eeff);">
+    <h1 class="display-3 fw-bold text-primary mb-4">Bienvenido a <span style="color: #4A90E2;">XeroClock</span></h1>
+    <p class="fs-5 text-dark mb-4">Descubre nuestra exclusiva colección de relojes de alta calidad, diseñados para cada momento especial.</p>
+    <a href="{{ url_for('catalog') }}" class="btn btn-gradient btn-lg px-5" style="background: linear-gradient(135deg, #43a047, #66bb6a); color: white; border: none;">
+        <i class="bi bi-clock-history"></i> Ver Catálogo
+    </a>
+</div>
+
+<!-- Sección Adicional: Destacado -->
+<div class="row mt-5">
+    <div class="col-md-4 text-center">
+        <i class="bi bi-award-fill text-warning display-4 mb-2"></i>
+        <h4>Calidad Garantizada</h4>
+        <p>Relojes con precisión suiza y materiales premium.</p>
+    </div>
+    <div class="col-md-4 text-center">
+        <i class="bi bi-truck text-primary display-4 mb-2"></i>
+        <h4>Envío Rápido</h4>
+        <p>Recibe tu pedido en tiempo récord, estés donde estés.</p>
+    </div>
+    <div class="col-md-4 text-center">
+        <i class="bi bi-shield-lock-fill text-success display-4 mb-2"></i>
+        <h4>Pago Seguro</h4>
+        <p>Protegemos tus datos para una compra sin preocupaciones.</p>
+    </div>
+</div>
+{% endblock %}

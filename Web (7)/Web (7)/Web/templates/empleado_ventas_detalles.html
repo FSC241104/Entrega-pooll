@@ -1,0 +1,61 @@
+{% extends "layout_employee.html" %}
+
+{% block content %}
+<div class="container my-5 p-4 bg-light rounded shadow-lg" style="background: linear-gradient(135deg, #e3f2fd, #e1bee7);">
+    <h1 class="text-center text-primary fw-bold mb-5">Gestión de Ventas y Detalles</h1>
+
+    <!-- Tabla de Ventas -->
+    <section class="mb-5">
+        <h4 class="text-success"><i class="bi bi-cart-check-fill"></i> Lista de Ventas</h4>
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID Venta</th>
+                    <th>Cliente</th>
+                    <th>Empleado</th>
+                    <th>Total</th>
+                    <th>Fecha de Venta</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for venta in ventas %}
+                <tr>
+                    <td>{{ venta.id_venta }}</td>
+                    <td>{{ venta.cliente_nombre }}</td>
+                    <td>{{ venta.empleado_nombre }}</td>
+                    <td>${{ venta.total }}</td>
+                    <td>{{ venta.fecha_venta }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Tabla de Detalles de Venta -->
+    <section>
+        <h4 class="text-info"><i class="bi bi-list-ul"></i> Lista de Detalles de Venta</h4>
+        <table class="table table-hover table-bordered">
+            <thead class="table-info">
+                <tr>
+                    <th>ID Detalle</th>
+                    <th>ID Venta</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detalle in detalles %}
+                <tr>
+                    <td>{{ detalle.id_detalle }}</td>
+                    <td>{{ detalle.id_venta }}</td>
+                    <td>{{ detalle.producto_nombre }}</td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>${{ detalle.subtotal }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+{% endblock %}

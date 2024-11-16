@@ -1,0 +1,84 @@
+<!-- templates/manage_proveedores.html -->
+{% extends "layout_employee.html" %}
+
+{% block content %}
+<div class="container my-5" style="background: linear-gradient(to bottom right, #ffffff, #e3f2fd); border-radius: 15px; padding: 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+    <h1 class="text-center text-primary fw-bold display-4 mb-5">Gestión de Proveedores</h1>
+    
+    <!-- Formulario para Crear Proveedor -->
+    <form method="post" class="p-4 mb-5 bg-white rounded shadow-sm">
+        <h4 class="text-secondary mb-4">Crear Proveedor</h4>
+        <div class="row g-3">
+            <div class="col-md-3">
+                <input type="text" class="form-control form-control-lg" name="nombre" placeholder="Nombre" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control form-control-lg" name="telefono" placeholder="Teléfono">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control form-control-lg" name="direccion" placeholder="Dirección">
+            </div>
+            <div class="col-md-3">
+                <input type="email" class="form-control form-control-lg" name="email" placeholder="Email">
+            </div>
+        </div>
+        <button type="submit" name="crear" class="btn btn-gradient mt-4 w-100" style="background: linear-gradient(135deg, #ff9a9e, #fad0c4); color: white; border: none;">Crear</button>
+    </form>
+
+    <!-- Formulario para Buscar Proveedor -->
+    <form method="post" class="p-4 mb-5 bg-white rounded shadow-sm">
+        <h4 class="text-secondary mb-4">Buscar Proveedor</h4>
+        <div class="input-group">
+            <input type="text" class="form-control form-control-lg" name="criterio" placeholder="Buscar por cualquier campo">
+            <button type="submit" name="buscar" class="btn btn-info btn-lg">Buscar</button>
+        </div>
+    </form>
+
+    <!-- Tabla de Proveedores -->
+    <h4 class="text-secondary mb-4">Lista de Proveedores</h4>
+    <div class="table-responsive bg-white rounded shadow-sm">
+        <table class="table table-hover align-middle">
+            <thead style="background: linear-gradient(135deg, #6a11cb, #2575fc); color: white;" class="text-center">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Email</th>
+                    <th>Fecha Registro</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for proveedor in proveedores %}
+                <tr class="text-center" style="background-color: #f9f9f9;">
+                    <td>{{ proveedor.id_proveedor }}</td>
+                    <td>{{ proveedor.nombre }}</td>
+                    <td>{{ proveedor.telefono }}</td>
+                    <td>{{ proveedor.direccion }}</td>
+                    <td>{{ proveedor.email }}</td>
+                    <td>{{ proveedor.fecha_registro }}</td>
+                    <td>
+                        <!-- Formulario para Actualizar -->
+                        <form method="post" class="d-inline-block mb-2">
+                            <input type="hidden" name="id_proveedor" value="{{ proveedor.id_proveedor }}">
+                            <input type="text" name="nombre" value="{{ proveedor.nombre }}" required class="form-control form-control-sm mb-2">
+                            <input type="text" name="telefono" value="{{ proveedor.telefono }}" class="form-control form-control-sm mb-2">
+                            <input type="text" name="direccion" value="{{ proveedor.direccion }}" class="form-control form-control-sm mb-2">
+                            <input type="email" name="email" value="{{ proveedor.email }}" class="form-control form-control-sm mb-2">
+                            <button type="submit" name="actualizar" class="btn btn-warning btn-sm w-100">Actualizar</button>
+                        </form>
+
+                        <!-- Formulario para Eliminar -->
+                        <form method="post" class="d-inline-block">
+                            <input type="hidden" name="id_proveedor" value="{{ proveedor.id_proveedor }}">
+                            <button type="submit" name="eliminar" class="btn btn-danger btn-sm w-100">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

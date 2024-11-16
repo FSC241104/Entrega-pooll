@@ -1,0 +1,66 @@
+<!-- templates/manage_marcas.html -->
+{% extends "layout_employee.html" %}
+
+{% block content %}
+<div class="container my-5" style="background: linear-gradient(to bottom right, #ffecd2, #fcb69f); border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+    <h1 class="text-center text-dark fw-bold display-4 mb-5">Gestión de Marcas</h1>
+
+    <!-- Formulario para Crear Marca -->
+    <form method="post" class="p-4 mb-5 bg-white rounded shadow" style="border-left: 5px solid #f77f00;">
+        <h4 class="text-dark fw-bold mb-4">Crear Marca</h4>
+        <div class="row">
+            <div class="col-md-8">
+                <input type="text" class="form-control form-control-lg border-0 shadow-sm" name="nombre" placeholder="Nombre de la Marca" required>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" name="crear" class="btn btn-primary btn-lg w-100" style="background: #ff6f61; border: none;">Crear</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Formulario para Buscar Marca -->
+    <form method="post" class="p-4 mb-5 bg-white rounded shadow" style="border-left: 5px solid #00bbf9;">
+        <h4 class="text-dark fw-bold mb-4">Buscar Marca</h4>
+        <div class="input-group">
+            <input type="text" class="form-control form-control-lg border-0 shadow-sm" name="criterio" placeholder="Buscar por nombre">
+            <button type="submit" name="buscar" class="btn btn-info btn-lg" style="background: #3a86ff; border: none;">Buscar</button>
+        </div>
+    </form>
+
+    <!-- Tabla de Marcas -->
+    <h4 class="text-dark fw-bold mb-4">Lista de Marcas</h4>
+    <div class="table-responsive bg-white rounded shadow-sm">
+        <table class="table table-hover align-middle">
+            <thead style="background: #8338ec; color: white;" class="text-center">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for marca in marcas %}
+                <tr class="text-center" style="background-color: #edf2fb;">
+                    <td>{{ marca.id_marca }}</td>
+                    <td class="fw-bold">{{ marca.nombre }}</td>
+                    <td>
+                        <!-- Formulario para Actualizar -->
+                        <form method="post" class="d-inline-block mb-2">
+                            <input type="hidden" name="id_marca" value="{{ marca.id_marca }}">
+                            <input type="text" name="nombre" value="{{ marca.nombre }}" required class="form-control form-control-sm border-0 shadow-sm mb-2">
+                            <button type="submit" name="actualizar" class="btn btn-warning btn-sm w-100" style="background: #ffd166; border: none;">Actualizar</button>
+                        </form>
+
+                        <!-- Formulario para Eliminar -->
+                        <form method="post" class="d-inline-block">
+                            <input type="hidden" name="id_marca" value="{{ marca.id_marca }}">
+                            <button type="submit" name="eliminar" class="btn btn-danger btn-sm w-100" style="background: #ef233c; border: none;">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

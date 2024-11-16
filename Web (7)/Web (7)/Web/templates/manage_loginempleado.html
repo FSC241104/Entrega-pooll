@@ -1,0 +1,75 @@
+<!-- templates/manage_loginempleado.html -->
+{% extends "layout_employee.html" %}
+
+{% block content %}
+<div class="container my-5" style="background: linear-gradient(to bottom right, #ffecd2, #fcb69f); border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+    <h1 class="text-center text-dark fw-bold display-4 mb-4">Gestión de Login de Empleados</h1>
+    <p class="lead text-center text-white">Administra usuarios con un diseño moderno y funcional</p>
+
+    <!-- Formulario para Crear/Actualizar LoginEmpleado -->
+    <form method="POST" action="{{ url_for('manage_loginempleado') }}" class="p-4 mb-5 bg-white rounded shadow" style="border-left: 5px solid #ff6f61;">
+        <h4 class="text-dark fw-bold mb-4">Formulario de Usuario</h4>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <label for="id_empleado" class="form-label">Empleado</label>
+                <select id="id_empleado" name="id_empleado" class="form-select form-select-lg shadow-sm" required>
+                    {% for empleado in empleados %}
+                    <option value="{{ empleado.id_empleado }}">{{ empleado.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="usuario" class="form-label">Usuario</label>
+                <input type="text" id="usuario" name="usuario" class="form-control form-control-lg shadow-sm" placeholder="Nombre de usuario" required>
+            </div>
+            <div class="col-md-4">
+                <label for="cargo" class="form-label">Cargo</label>
+                <select id="cargo" name="cargo" class="form-select form-select-lg shadow-sm" required>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Vendedor">Vendedor</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="contrasena" class="form-label">Contraseña</label>
+                <input type="password" id="contrasena" name="contrasena" class="form-control form-control-lg shadow-sm" placeholder="Contraseña" required>
+            </div>
+        </div>
+        <div class="d-grid gap-3 mt-4">
+            <button type="submit" name="accion" value="crear" class="btn btn-warning btn-lg w-100" style="background: linear-gradient(135deg, #ff9a9e, #fad0c4); color: white; border: none;">Crear</button>
+            <button type="submit" name="accion" value="actualizar" class="btn btn-info btn-lg w-100" style="background: linear-gradient(135deg, #3a86ff, #00bbf9); color: white; border: none;">Actualizar</button>
+        </div>
+    </form>
+
+    <!-- Tabla para listar LoginEmpleados -->
+    <h4 class="text-white fw-bold mb-4">Lista de Usuarios</h4>
+    <div class="table-responsive bg-white rounded shadow-sm">
+        <table class="table table-hover align-middle">
+            <thead style="background: linear-gradient(135deg, #8338ec, #3a86ff); color: white;" class="text-center">
+                <tr>
+                    <th>ID Login</th>
+                    <th>ID Empleado</th>
+                    <th>Usuario</th>
+                    <th>Cargo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for login in logins %}
+                <tr class="text-center" style="background-color: #f1f5f9;">
+                    <td>{{ login.id_login }}</td>
+                    <td>{{ login.id_empleado }}</td>
+                    <td>{{ login.usuario }}</td>
+                    <td>{{ login.cargo }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('manage_loginempleado') }}" style="display:inline;">
+                            <input type="hidden" name="id_login" value="{{ login.id_login }}">
+                            <button type="submit" name="accion" value="eliminar" class="btn btn-danger btn-sm w-100" style="background: #ef233c; border: none;">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

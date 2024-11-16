@@ -1,0 +1,77 @@
+{% extends "layout_vendedor.html" %}
+
+{% block content %}
+<div class="container my-5" style="background-color: #f8f9fa; border-radius: 15px; padding: 25px;">
+    <h1 class="text-center text-warning display-4 fw-bold mb-4">Gestión de Detalles de Ventas</h1>
+
+    <!-- Formulario para Crear Detalle de Venta -->
+    <form method="post" class="p-4 mb-5 bg-gradient border rounded shadow-lg" style="background: linear-gradient(135deg, #ff758c, #ff7eb3);">
+        <h4 class="mb-3 text-white fw-bold">Crear Detalle de Venta</h4>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="id_venta" class="form-label text-light">Venta:</label>
+                <select class="form-select form-select-lg" name="id_venta" required>
+                    <option value="" disabled selected>Seleccionar Venta</option>
+                    {% for venta in ventas %}
+                    <option value="{{ venta.id_venta }}">Venta ID: {{ venta.id_venta }} - Cliente: {{ venta.cliente_nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="id_reloj" class="form-label text-light">Reloj:</label>
+                <select class="form-select form-select-lg" name="id_reloj" required>
+                    <option value="" disabled selected>Seleccionar Reloj</option>
+                    {% for reloj in relojes %}
+                    <option value="{{ reloj.id_reloj }}">{{ reloj.modelo }} - ${{ reloj.precio }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="cantidad" class="form-label text-light">Cantidad:</label>
+                <input type="number" min="1" class="form-control form-control-lg" name="cantidad" placeholder="Cantidad" required>
+            </div>
+        </div>
+        <button type="submit" name="crear" class="btn btn-danger btn-lg mt-4 w-100"><i class="bi bi-plus-circle"></i> Crear Detalle</button>
+    </form>
+
+    <!-- Formulario para Buscar Detalle de Venta -->
+    <form method="post" class="p-4 mb-4 bg-gradient border rounded shadow-lg" style="background: linear-gradient(135deg, #89f7fe, #66a6ff);">
+        <h4 class="mb-3 text-dark fw-bold">Buscar Detalle de Venta</h4>
+        <div class="input-group">
+            <input type="text" class="form-control form-control-lg" name="criterio" placeholder="Buscar por cliente, reloj o cantidad" required>
+            <button type="submit" name="buscar" class="btn btn-warning btn-lg px-4"><i class="bi bi-search"></i> Buscar</button>
+        </div>
+    </form>
+
+    <!-- Tabla de Detalles de Ventas -->
+    <h4 class="mb-3 text-info fw-bold">Lista de Detalles de Ventas</h4>
+    <div class="table-responsive bg-gradient p-3 border rounded shadow-lg" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+        <table class="table table-hover table-bordered align-middle">
+            <thead style="background-color: #fd7e14; color: #fff;" class="text-center">
+                <tr>
+                    <th>ID Detalle</th>
+                    <th>ID Venta</th>
+                    <th>Cliente</th>
+                    <th>Reloj</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detalle in detalles %}
+                <tr class="text-center" style="background-color: #fdf6e3;">
+                    <td>{{ detalle.id_detalle }}</td>
+                    <td>{{ detalle.id_venta }}</td>
+                    <td>{{ detalle.cliente_nombre }}</td>
+                    <td>{{ detalle.reloj_modelo }}</td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>${{ detalle.precio_unitario }}</td>
+                    <td>${{ detalle.cantidad * detalle.precio_unitario }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

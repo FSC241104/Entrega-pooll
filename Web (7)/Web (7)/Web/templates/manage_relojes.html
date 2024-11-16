@@ -1,0 +1,114 @@
+{% extends "layout_employee.html" %}
+
+{% block content %}
+<div class="container my-5" style="background: linear-gradient(to bottom right, #ffffff, #e3f2fd); border-radius: 15px; padding: 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+    <h1 class="text-center text-primary fw-bold display-4 mb-5">Gestión de Relojes</h1>
+    
+    <!-- Formulario para Crear Reloj -->
+    <form method="post" class="p-4 mb-5 bg-white rounded shadow-sm">
+        <h4 class="text-secondary mb-4">Crear Reloj</h4>
+        <div class="row g-3">
+            <div class="col-md-3">
+                <input type="text" class="form-control form-control-lg" name="modelo" placeholder="Modelo" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" step="0.01" class="form-control form-control-lg" name="precio" placeholder="Precio" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control form-control-lg" name="descripcion" placeholder="Descripción">
+            </div>
+            <div class="col-md-2">
+                <select class="form-select form-select-lg" name="id_marca" required>
+                    <option value="" disabled selected>Seleccionar Marca</option>
+                    {% for marca in marcas %}
+                    <option value="{{ marca.id_marca }}">{{ marca.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select form-select-lg" name="id_proveedor" required>
+                    <option value="" disabled selected>Seleccionar Proveedor</option>
+                    {% for proveedor in proveedores %}
+                    <option value="{{ proveedor.id_proveedor }}">{{ proveedor.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit" name="crear" class="btn btn-gradient mt-4 w-100" style="background: linear-gradient(135deg, #ff9a9e, #fad0c4); color: white; border: none;">Crear</button>
+    </form>
+
+    <!-- Formulario para Buscar Reloj -->
+    <form method="post" class="p-4 mb-5 bg-white rounded shadow-sm">
+        <h4 class="text-secondary mb-4">Buscar Reloj</h4>
+        <div class="input-group">
+            <input type="text" class="form-control form-control-lg" name="criterio" placeholder="Buscar por modelo o descripción">
+            <button type="submit" name="buscar" class="btn btn-info btn-lg">Buscar</button>
+        </div>
+    </form>
+
+    <!-- Tabla de Relojes -->
+    <h4 class="text-secondary mb-4">Lista de Relojes</h4>
+    <div class="table-responsive bg-white rounded shadow-sm">
+        <table class="table table-hover align-middle">
+            <thead style="background: linear-gradient(135deg, #6a11cb, #2575fc); color: white;" class="text-center">
+                <tr>
+                    <th>ID</th>
+                    <th>Modelo</th>
+                    <th>Precio</th>
+                    <th>Descripción</th>
+                    <th>Marca</th>
+                    <th>Proveedor</th>
+                    <th>Fecha Registro</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reloj in relojes %}
+                <tr class="text-center" style="background-color: #f9f9f9;">
+                    <td>{{ reloj.id_reloj }}</td>
+                    <td>{{ reloj.modelo }}</td>
+                    <td>${{ reloj.precio }}</td>
+                    <td>{{ reloj.descripcion }}</td>
+                    <td>{{ reloj.marca_nombre }}</td>
+                    <td>{{ reloj.proveedor_nombre }}</td>
+                    <td>{{ reloj.fecha_registro }}</td>
+                    <td>
+                        <!-- Formulario para Actualizar -->
+                        <form method="post" class="d-inline-block mb-2">
+                            <input type="hidden" name="id_reloj" value="{{ reloj.id_reloj }}">
+                            <input type="text" name="modelo" value="{{ reloj.modelo }}" required class="form-control form-control-sm mb-2">
+                            <input type="number" step="0.01" name="precio" value="{{ reloj.precio }}" required class="form-control form-control-sm mb-2">
+                            <input type="text" name="descripcion" value="{{ reloj.descripcion }}" class="form-control form-control-sm mb-2">
+
+                            <select name="id_marca" class="form-select form-select-sm mb-2" required>
+                                {% for marca in marcas %}
+                                <option value="{{ marca.id_marca }}" {% if marca.id_marca == reloj.id_marca %}selected{% endif %}>
+                                    {{ marca.nombre }}
+                                </option>
+                                {% endfor %}
+                            </select>
+
+                            <select name="id_proveedor" class="form-select form-select-sm mb-2" required>
+                                {% for proveedor in proveedores %}
+                                <option value="{{ proveedor.id_proveedor }}" {% if proveedor.id_proveedor == reloj.id_proveedor %}selected{% endif %}>
+                                    {{ proveedor.nombre }}
+                                </option>
+                                {% endfor %}
+                            </select>
+
+                            <button type="submit" name="actualizar" class="btn btn-warning btn-sm w-100">Actualizar</button>
+                        </form>
+
+                        <!-- Formulario para Eliminar -->
+                        <form method="post" class="d-inline-block">
+                            <input type="hidden" name="id_reloj" value="{{ reloj.id_reloj }}">
+                            <button type="submit" name="eliminar" class="btn btn-danger btn-sm w-100">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "layout_employee.html" %}
+
+{% block content %}
+<div class="container my-5" style="background: linear-gradient(to bottom right, #ffffff, #e3f2fd); border-radius: 15px; padding: 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);">
+    <h1 class="text-center text-primary fw-bold display-4 mb-5">Gestión de Ventas</h1>
+
+    <!-- Formulario para Crear Venta -->
+    <section class="mb-5">
+        <h3 class="text-secondary mb-4">Registrar Nueva Venta</h3>
+        <form method="post" class="row g-4 align-items-center">
+            <div class="col-md-4">
+                <label for="id_cliente" class="form-label">Cliente</label>
+                <select id="id_cliente" name="id_cliente" class="form-select form-select-lg" required>
+                    <option value="" disabled selected>Seleccionar Cliente</option>
+                    {% for cliente in clientes %}
+                    <option value="{{ cliente.id_cliente }}">{{ cliente.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="id_empleado" class="form-label">Empleado</label>
+                <select id="id_empleado" name="id_empleado" class="form-select form-select-lg" required>
+                    <option value="" disabled selected>Seleccionar Empleado</option>
+                    {% for empleado in empleados %}
+                    <option value="{{ empleado.id_empleado }}">{{ empleado.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="total" class="form-label">Total</label>
+                <input type="number" id="total" name="total" step="0.01" class="form-control form-control-lg" placeholder="Ingrese el total" required>
+            </div>
+
+            <div class="col-12 text-center">
+                <button type="submit" name="crear" class="btn btn-gradient w-100 py-3" style="background: linear-gradient(135deg, #ff9a9e, #fad0c4); color: white; border: none;">Registrar Venta</button>
+            </div>
+        </form>
+    </section>
+
+    <hr class="my-5">
+
+    <!-- Tabla de Ventas -->
+    <section>
+        <h3 class="text-secondary mb-4">Lista de Ventas</h3>
+        <div class="table-responsive bg-light p-3 border rounded shadow-sm">
+            <table class="table table-hover align-middle">
+                <thead style="background: linear-gradient(135deg, #6a11cb, #2575fc); color: white;" class="text-center">
+                    <tr>
+                        <th>ID Venta</th>
+                        <th>Cliente</th>
+                        <th>Empleado</th>
+                        <th>Total</th>
+                        <th>Fecha de Venta</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venta in ventas %}
+                    <tr class="text-center" style="background-color: #fdfdfe;">
+                        <td>{{ venta.id_venta }}</td>
+                        <td>{{ venta.cliente_nombre }}</td>
+                        <td>{{ venta.empleado_nombre }}</td>
+                        <td>${{ venta.total }}</td>
+                        <td>{{ venta.fecha_venta }}</td>
+                        <td>
+                            <!-- Formulario para Actualizar -->
+                            <form method="post" class="d-inline-block mb-2" style="width: 100px;">
+                                <input type="hidden" name="id_venta" value="{{ venta.id_venta }}">
+
+                                <select name="id_cliente" class="form-select form-select-sm mb-2">
+                                    {% for cliente in clientes %}
+                                    <option value="{{ cliente.id_cliente }}" {% if cliente.id_cliente == venta.id_cliente %}selected{% endif %}>
+                                        {{ cliente.nombre }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+
+                                <select name="id_empleado" class="form-select form-select-sm mb-2">
+                                    {% for empleado in empleados %}
+                                    <option value="{{ empleado.id_empleado }}" {% if empleado.id_empleado == venta.id_empleado %}selected{% endif %}>
+                                        {{ empleado.nombre }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+
+                                <input type="number" name="total" value="{{ venta.total }}" step="0.01" class="form-control form-control-sm mb-2">
+
+                                <button type="submit" name="actualizar" class="btn btn-warning btn-sm w-100">Actualizar</button>
+                            </form>
+
+                            <!-- Formulario para Eliminar -->
+                            <form method="post" class="d-inline-block">
+                                <input type="hidden" name="id_venta" value="{{ venta.id_venta }}">
+                                <button type="submit" name="eliminar" class="btn btn-danger btn-sm w-100">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+{% endblock %}

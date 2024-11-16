@@ -1,0 +1,80 @@
+{% extends "layout_client.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <header class="text-center mb-5">
+        <h1 class="display-4 text-warning fw-bold">Acerca de Nosotros</h1>
+        <p class="lead text-dark">Bienvenido a XeroClock, tu destino para relojes de alta calidad y estilo único.</p>
+    </header>
+
+    <!-- Sección: Nuestra Historia -->
+    <div class="row align-items-center g-5 mb-5">
+        <div class="col-md-6">
+            <img src="https://images.unsplash.com/photo-1506917989433-b249f1047aec" class="img-fluid rounded shadow-lg" alt="Nuestra historia">
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-danger fw-bold">Nuestra Historia</h2>
+            <p class="text-secondary">
+                En XeroClock, comenzamos nuestra aventura con la pasión de ofrecer relojes exclusivos, combinando 
+                tecnología avanzada con diseño elegante. Nos enorgullecemos de proporcionar una experiencia de 
+                compra única y productos que duran toda la vida.
+            </p>
+            <a href="{{ url_for('catalog') }}" class="btn btn-outline-warning btn-lg mt-3">Explorar Catálogo</a>
+        </div>
+    </div>
+
+    <!-- Sección: Nuestros Valores -->
+    <div class="row align-items-center g-5 mb-5">
+        <div class="col-md-6 order-md-2">
+            <img src="https://images.unsplash.com/photo-1519750783826-e272f9a58c58" class="img-fluid rounded shadow-lg" alt="Nuestros valores">
+        </div>
+        <div class="col-md-6 order-md-1">
+            <h2 class="text-success fw-bold">Nuestros Valores</h2>
+            <p class="text-dark">
+                La calidad, la precisión y la satisfacción del cliente son el corazón de XeroClock. Nos esforzamos 
+                por ofrecer relojes de excelencia y un servicio inigualable. Cada uno de nuestros relojes es un 
+                símbolo de nuestro compromiso con estos valores.
+            </p>
+            <a href="{{ url_for('about') }}" class="btn btn-outline-danger btn-lg mt-3">Conoce Más</a>
+        </div>
+    </div>
+
+    <!-- Sección Final: Testimonios -->
+    <section class="text-center my-5">
+        <h2 class="text-primary fw-bold mb-4">Lo Que Dicen Nuestros Clientes</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0" style="border-radius: 15px; background-color: #ffeeba;">
+                    <div class="card-body">
+                        <p class="card-text">"Excelente calidad y un diseño impresionante. Estoy muy satisfecho con mi compra."</p>
+                        <h5 class="text-primary">- Juan Pérez</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0" style="border-radius: 15px; background-color: #d1ecf1;">
+                    <div class="card-body">
+                        <p class="card-text">"El servicio al cliente es excepcional. Recomiendo XeroClock a todos."</p>
+                        <h5 class="text-success">- Ana García</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0" style="border-radius: 15px; background-color: #f8d7da;">
+                    <div class="card-body">
+                        <p class="card-text">"Los relojes son increíbles y a un precio justo. Definitivamente compraré más."</p>
+                        <h5 class="text-danger">- Carlos López</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Call to Action -->
+    <div class="text-center my-5">
+        <h2 class="fw-bold text-warning">Descubre Nuestra Colección</h2>
+        <p class="lead text-dark">Encuentra el reloj perfecto para ti o para un ser querido.</p>
+        <a href="{{ url_for('catalog') }}" class="btn btn-primary btn-lg"><i class="bi bi-watch"></i> Ver Catálogo</a>
+    </div>
+</div>
+{% endblock %}

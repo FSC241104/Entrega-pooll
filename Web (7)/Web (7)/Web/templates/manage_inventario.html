@@ -1,0 +1,100 @@
+{% extends "layout_employee.html" %}
+
+{% block content %}
+<div class="container my-5" style="background: linear-gradient(to bottom right, #fff1e6, #ffb3c1); border-radius: 15px; padding: 30px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);">
+    <h1 class="text-center text-danger fw-bold display-4 mb-4">Gestión de Inventario</h1>
+
+    <!-- Formulario para Agregar Nuevo Inventario -->
+    <section class="mb-5 p-4 bg-white rounded shadow-sm" style="border-left: 5px solid #ff5d8f;">
+        <h3 class="text-dark fw-bold mb-3">Agregar Nuevo Inventario</h3>
+        <form method="post" class="row g-4">
+            <div class="col-md-4">
+                <label for="id_reloj" class="form-label">Reloj</label>
+                <select id="id_reloj" name="id_reloj" class="form-select form-select-lg shadow-sm" required>
+                    <option value="" disabled selected>Seleccionar Reloj</option>
+                    {% for reloj in relojes %}
+                    <option value="{{ reloj.id_reloj }}">{{ reloj.modelo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="id_compra" class="form-label">Compra</label>
+                <select id="id_compra" name="id_compra" class="form-select form-select-lg shadow-sm" required>
+                    <option value="" disabled selected>Seleccionar Compra</option>
+                    {% for compra in compras %}
+                    <option value="{{ compra.id_compra }}">Compra #{{ compra.id_compra }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="cantidad" class="form-label">Cantidad</label>
+                <input type="number" id="cantidad" name="cantidad" class="form-control form-control-lg shadow-sm" placeholder="Cantidad" required>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" name="crear" class="btn btn-gradient btn-lg w-100" style="background: linear-gradient(135deg, #ff5d8f, #ff9a8b); color: white; border: none;">Agregar al Inventario</button>
+            </div>
+        </form>
+    </section>
+
+    <hr>
+
+    <!-- Tabla de Inventario -->
+    <section>
+        <h3 class="text-dark fw-bold mb-4">Lista del Inventario</h3>
+        <div class="table-responsive bg-white rounded shadow-sm">
+            <table class="table table-hover align-middle">
+                <thead style="background: linear-gradient(135deg, #ff758f, #ff9a8b); color: white;" class="text-center">
+                    <tr>
+                        <th>ID Inventario</th>
+                        <th>Reloj</th>
+                        <th>Compra</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inventario in inventarios %}
+                    <tr class="text-center" style="background-color: #f9eae8;">
+                        <td>{{ inventario.id_inventario }}</td>
+                        <td>{{ inventario.reloj_modelo }}</td>
+                        <td>{{ inventario.compra_info }}</td>
+                        <td>{{ inventario.cantidad }}</td>
+                        <td>
+                            <!-- Formulario para Actualizar -->
+                            <form method="post" class="d-inline">
+                                <input type="hidden" name="id_inventario" value="{{ inventario.id_inventario }}">
+                                <select name="id_reloj" class="form-select form-select-sm mb-2" required>
+                                    {% for reloj in relojes %}
+                                    <option value="{{ reloj.id_reloj }}" {% if reloj.id_reloj == inventario.id_reloj %}selected{% endif %}>
+                                        {{ reloj.modelo }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <select name="id_compra" class="form-select form-select-sm mb-2" required>
+                                    {% for compra in compras %}
+                                    <option value="{{ compra.id_compra }}" {% if compra.id_compra == inventario.id_compra %}selected{% endif %}>
+                                        Compra #{{ compra.id_compra }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <input type="number" name="cantidad" value="{{ inventario.cantidad }}" class="form-control form-control-sm mb-2" required>
+                                <button type="submit" name="actualizar" class="btn btn-warning btn-sm w-100" style="background: #ffd166; border: none;">Actualizar</button>
+                            </form>
+
+                            <!-- Formulario para Eliminar -->
+                            <form method="post" class="d-inline">
+                                <input type="hidden" name="id_inventario" value="{{ inventario.id_inventario }}">
+                                <button type="submit" name="eliminar" class="btn btn-danger btn-sm w-100" style="background: #ef476f; border: none;">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "layout_employee.html" %}
+
+{% block content %}
+<div class="container my-5" style="background: linear-gradient(to bottom right, #e3f2fd, #bbdefb); border-radius: 15px; padding: 30px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);">
+    <h1 class="text-center text-primary fw-bold display-4 mb-4">Gestión de Clientes</h1>
+
+    <!-- Formulario para Crear Cliente -->
+    <form method="post" class="p-4 mb-5 bg-white rounded shadow-sm" style="border-left: 5px solid #1e88e5;">
+        <h4 class="text-dark fw-bold mb-3">Crear Cliente</h4>
+        <div class="row g-3">
+            <div class="col-md-3">
+                <input type="text" class="form-control form-control-lg shadow-sm" name="nombre" placeholder="Nombre" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control form-control-lg shadow-sm" name="telefono" placeholder="Teléfono">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control form-control-lg shadow-sm" name="direccion" placeholder="Dirección">
+            </div>
+            <div class="col-md-3">
+                <input type="email" class="form-control form-control-lg shadow-sm" name="email" placeholder="Email">
+            </div>
+        </div>
+        <button type="submit" name="crear" class="btn btn-gradient btn-lg w-100 mt-4" style="background: linear-gradient(135deg, #1976d2, #42a5f5); color: white; border: none;">Crear</button>
+    </form>
+
+    <!-- Formulario para Buscar Cliente -->
+    <form method="post" class="p-4 mb-5 bg-white rounded shadow-sm" style="border-left: 5px solid #00796b;">
+        <h4 class="text-dark fw-bold mb-3">Buscar Cliente</h4>
+        <div class="input-group">
+            <input type="text" class="form-control form-control-lg shadow-sm" name="criterio" placeholder="Buscar por Nombre, Teléfono, Dirección o Email">
+            <button type="submit" name="buscar" class="btn btn-info btn-lg" style="background: #00796b; border: none;">Buscar</button>
+        </div>
+    </form>
+
+    <!-- Tabla de Clientes -->
+    <h4 class="text-dark fw-bold mb-4">Lista de Clientes</h4>
+    <div class="table-responsive bg-white rounded shadow-sm">
+        <table class="table table-hover align-middle">
+            <thead style="background: linear-gradient(135deg, #1e88e5, #1565c0); color: white;" class="text-center">
+                <tr>
+                    <th>ID Cliente</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr class="text-center" style="background-color: #e1f5fe;">
+                    <td>{{ cliente.id_cliente }}</td>
+                    <td class="fw-bold">{{ cliente.nombre }}</td>
+                    <td>{{ cliente.telefono }}</td>
+                    <td>{{ cliente.direccion }}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td>
+                        <!-- Formulario para Actualizar -->
+                        <form method="post" class="d-inline-block mb-2">
+                            <input type="hidden" name="id_cliente" value="{{ cliente.id_cliente }}">
+                            <input type="text" name="nombre" value="{{ cliente.nombre }}" required class="form-control form-control-sm mb-2 shadow-sm">
+                            <input type="text" name="telefono" value="{{ cliente.telefono }}" class="form-control form-control-sm mb-2 shadow-sm">
+                            <input type="text" name="direccion" value="{{ cliente.direccion }}" class="form-control form-control-sm mb-2 shadow-sm">
+                            <input type="email" name="email" value="{{ cliente.email }}" class="form-control form-control-sm mb-2 shadow-sm">
+                            <button type="submit" name="actualizar" class="btn btn-warning btn-sm w-100" style="background: #ffca28; border: none;">Actualizar</button>
+                        </form>
+
+                        <!-- Formulario para Eliminar -->
+                        <form method="post" class="d-inline-block">
+                            <input type="hidden" name="id_cliente" value="{{ cliente.id_cliente }}">
+                            <button type="submit" name="eliminar" class="btn btn-danger btn-sm w-100" style="background: #d32f2f; border: none;">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
